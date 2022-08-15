@@ -1,5 +1,7 @@
 <template>
-  <div>details</div>
+  <div>details
+    <Nav/>
+  </div>
 </template>
 
 <script lang="ts">
