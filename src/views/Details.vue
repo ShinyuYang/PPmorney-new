@@ -1,7 +1,7 @@
 <template>
-  <div>details
-    <Nav/>
-  </div>
+  <Layout>
+    Details .vue
+  </Layout>
 </template>
 
 <script lang="ts">
@@ -9,7 +9,3 @@ export default {
   name: 'Details'
 };
 </script>
-
-<style lang="scss" scoped>
-
-</style>
