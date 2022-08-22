@@ -28,7 +28,6 @@ export default {
     display: flex;
     box-shadow: 0 0 10px rgba(0,0,0,0.25) ;
     flex-direction:row;
-    font-family:'ResourceHanRoun31510e4f9b24931';
     font-size: 12px;
     > .item{
       padding: 2px 0;
