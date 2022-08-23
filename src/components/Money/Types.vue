@@ -15,7 +15,7 @@
 
   @Component
   export default class Types extends Vue{
-    type ='-';//vue自动识别选项是name or method 等选项
+    type ='-';//vue自动识别选项是name or method 等选项;一开始是支出
     selectType(type='string'){
       if(type!=='-'&&type!=='+'){
         throw new Error('type is unknown')
