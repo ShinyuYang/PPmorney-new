@@ -51,6 +51,14 @@
       </li>
       <li>
         <div class="svg-wrapper"
+             :class=" sort ==='income'&&'selected'"
+             @click="toggle('income')">
+          <Icon name="income"/>
+        </div>
+        <span>工资</span>
+      </li>
+      <li>
+        <div class="svg-wrapper"
              :class=" sort ==='clothes'&&'selected'"
              @click="toggle('clothes')">
           <Icon name="clothes"/>
@@ -59,11 +67,35 @@
       </li>
       <li>
         <div class="svg-wrapper"
+             :class=" sort ==='partime'&&'selected'"
+             @click="toggle('partime')">
+          <Icon name="partime"/>
+        </div>
+        <span>兼职</span>
+      </li>
+      <li>
+        <div class="svg-wrapper"
+             :class=" sort ==='finance'&&'selected'"
+             @click="toggle('finance')">
+          <Icon name="finance"/>
+        </div>
+        <span>理财</span>
+      </li>
+      <li>
+        <div class="svg-wrapper"
              :class=" sort ==='communicate'&&'selected'"
              @click="toggle('communicate')">
           <Icon name="communicate"/>
         </div>
         <span>通讯</span>
+      </li>
+      <li>
+        <div class="svg-wrapper"
+             :class=" sort ==='alimony'&&'selected'"
+             @click="toggle('alimony')">
+          <Icon name="alimony"/>
+        </div>
+        <span>生活费</span>
       </li>
       <li>
         <div class="svg-wrapper"
@@ -123,6 +155,14 @@
       </li>
       <li>
         <div class="svg-wrapper"
+             :class=" sort ==='redbag'&&'selected'"
+             @click="toggle('redbag')">
+          <Icon name="redbag"/>
+        </div>
+        <span>红包</span>
+      </li>
+      <li>
+        <div class="svg-wrapper"
              :class=" sort ==='sport'&&'selected'"
              @click="toggle('sport')">
           <Icon name="sport"/>
@@ -159,25 +199,33 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
-@Component
+@Component({
+  components:{
+
+  }
+})
 export default  class Tags extends Vue{
+  @Prop()selectedTags: string[]=[];
   sort ='';
   toggle(sort='string'){
     if(this.sort===sort){
       this.sort=''
     }else{
       this.sort=sort
+      this.selectedTags.push(this.sort)
     }
-
+      this.$emit('xxx',this.selectedTags)
   }
-  // @Prop() dataSource: string[]| undefined;//默认的tags的数组
-  // selectedTags: string[]=[];//被选中的tags 的数组
-}
+
+//   // @Prop() dataSource: string[]| undefined;//默认的tags的数组
+//   // selectedTags: string[]=[];//被选中的tags 的数组
+ }
 </script>
 
 <style lang="scss" scoped>
+
 .tags{
   margin-top:12px;
   padding-left:4vw;
@@ -185,14 +233,12 @@ export default  class Tags extends Vue{
   height: 45vh;
   flex-grow:1;
   overflow: auto;
-
   > .current{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     flex-wrap:wrap;
-
     > li{
       width:23vw;
       display:flex;

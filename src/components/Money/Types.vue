@@ -48,12 +48,11 @@
 .types{
   display:flex;
   flex-direction: row;
-  justify-content:center;
-  background:#FFA07A;
   text-align: center;
+  background:#c4c4c4;
   height:7vh;
   > li{
-    width:18vw;
+    width:50%;
     font-size: 21px;
     position:relative;
     display: flex;

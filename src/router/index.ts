@@ -25,6 +25,7 @@ const routes = [
     path:'/statistic',
     component:Statistic
   },
+
   {
     path:'*',
     component:NotFound

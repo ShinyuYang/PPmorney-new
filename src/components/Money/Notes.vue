@@ -25,6 +25,7 @@
   align-items: center;
   box-shadow: 0 0 3px rgba(0,0,0,0.1) ;
   height:6vh;
+  position: relative;
   .name{
     padding-right: 4vw;
   }
