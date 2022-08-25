@@ -3,26 +3,25 @@
   <NumberPad/>
   <Types/>
   <Notes/>
-  <Tags2/>
-<!--  :data-source="tags"-->
+  <Tags2 :data-source="tags"/>
 </Layout>
 </template>
 
 
-<script lang="ts">
-import Vue from 'vue';
+<script>
 import NumberPad from '@/components/Money/NumberPad.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags2 from '@/components/Money/Tags2.vue';
 import Types from '@/components/Money/Types.vue';
-import {Component} from 'vue-property-decorator';
 
-@Component({
-  components: { Tags2, Notes, Types,NumberPad},
-})
-
-export default class Money extends Vue {
-
+export default  {
+  name: 'Money',
+  components: {Tags2,Notes,Types,NumberPad},
+ data(){
+   return{
+     tags: ['衣服','食品','住宿','交通']
+   }
+ }
 }
 </script>
 

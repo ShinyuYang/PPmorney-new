@@ -1,20 +1,11 @@
 <template>
 <div class="tags">
   <ul class="current">
-    <li><span>衣服</span></li>
-    <li><span>食品</span></li>
-    <li><span>住房</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
-    <li><span>交通</span></li>
+    <li v-for="tag in dataSource" :key="tag"
+        :class="{selected: selectedTags.indexOf(tag)>=0}"
+        @click="select(tag)"><span>{{tag}}</span></li>
+    <!-- 另一个写法  :class="selectedTags.indexOf(tag)>=0&&'selected'";
+    selected是类名,后面是触发该类型的条件-->
   </ul>
   <div class="new">
     <button class="add">
@@ -26,10 +17,21 @@
 
 <script lang="ts">
 import Vue from'vue';
-import {Component} from'vue-property-decorator';
+import {Component,Prop} from'vue-property-decorator';
+
 @Component
 export default class Tags2 extends Vue {
-
+  @Prop() dataSource: string[] | undefined;//冒号后面是约定dataSource类型
+  selectedTags: string[]=[];
+  select(tag: string){
+    const index=this.selectedTags.indexOf(tag)
+    if(index>=0){
+      this.selectedTags.splice(index,1)
+    }else {
+      this.selectedTags=[]
+      this.selectedTags.push(tag);
+    }
+  }
 }
 </script>
 
@@ -57,7 +59,9 @@ export default class Tags2 extends Vue {
       justify-content: center;
       align-items: center;
       margin: 1.5vh 4vw;
-
+      &.selected{
+        background:#FFA07A ;
+      }
     }
   }
   .new{
@@ -77,5 +81,8 @@ export default class Tags2 extends Vue {
   }
   }
     }
+.tags::-webkit-scrollbar {
+  display: none;
+}
 
 </style>

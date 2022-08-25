@@ -216,7 +216,7 @@ export default  class Tags extends Vue{
       this.sort=sort
       this.selectedTags.push(this.sort)
     }
-      this.$emit('xxx',this.selectedTags)
+      // this.$emit('xxx',this.selectedTags)
   }
 
 //   // @Prop() dataSource: string[]| undefined;//默认的tags的数组
