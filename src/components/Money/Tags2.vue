@@ -8,7 +8,8 @@
     selected是类名,后面是触发该类型的条件-->
   </ul>
   <div class="new">
-    <button class="add">
+    <button class="add"
+            @click="create">
       <Icon name="add2"/>
     </button>
   </div>
@@ -21,15 +22,26 @@ import {Component,Prop} from'vue-property-decorator';
 
 @Component
 export default class Tags2 extends Vue {
-  @Prop() dataSource: string[] | undefined;//冒号后面是约定dataSource类型
-  selectedTags: string[]=[];
-  select(tag: string){
-    const index=this.selectedTags.indexOf(tag)
-    if(index>=0){
-      this.selectedTags.splice(index,1)
-    }else {
-      this.selectedTags=[]
+  @Prop() readonly dataSource: string[] | undefined;//冒号后面是约定dataSource类型
+  selectedTags: string[] = [];
+
+  select(tag: string) {
+    const index = this.selectedTags.indexOf(tag)//判断selectedTags是否存在数据的语句
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1)
+    } else {
+      this.selectedTags = []
       this.selectedTags.push(tag);
+    }
+    this.$emit('update:value',this.selectedTags)//得到被选中的selectedTags然后传到父组件Money
+  }
+
+  create() {
+    const name = window.prompt('请输入标签名');
+    if (name === '') {
+      window.alert('标签名不能为空');
+    } else if (this.dataSource) {
+      this.$emit('update:dataSource', [...this.dataSource, name])//把新的数组重新赋值给数据tags
     }
   }
 }
