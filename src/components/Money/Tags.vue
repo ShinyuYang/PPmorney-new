@@ -249,7 +249,7 @@ export default  class Tags extends Vue{
         font-size: 10px;
       }
       > .svg-wrapper{
-        background:rgb(241,243,244);
+      //rgb(270,300,244)
         height:54px;
         width:54px;
         border-radius:50% 50%;
