@@ -16,11 +16,9 @@
   </div>
 </Layout>
 </template>
-
 <script lang="ts">
 import Vue from'vue';
 import {Component} from'vue-property-decorator';
-import {tagListModel} from '@/models/tagListModel';
 import Notes from '@/components/Money/Notes.vue';
 import Button from '@/components/Button.vue';
 
@@ -28,31 +26,26 @@ import Button from '@/components/Button.vue';
   components: {Button, Notes}
 })
 export default class EditLabel extends Vue {
-  tag?: {id: string;name: string}=undefined;
+  tag?: Tag=undefined;
   // 再通过created赋值
  created(){
-   const id = this.$route.params.id;
-   tagListModel.fetch();
-   const tags=tagListModel.data;
-   const tag =tags.filter(t =>t.id===id)[0];
-   if(tag){
-     this.tag=tag;
-   }else{
+   this.tag=window.findTag(this.$route.params.id)
+   if(!this.tag){
      this.$router.replace('/404');
    }//实现点击一个标签出现对应标签的编辑页面,跟route页面关联
  }
  update(name: string){
    if(this.tag){
-     tagListModel.update(this.tag.id,name);
+     window.updateTag(this.tag.id,name);
    }
  }
  remove(){
     if(this.tag){
-      if(tagListModel.remove(this.tag.id)){
-        this.$router.back();
-      }else{
-        window.alert('删除失败')
-      }
+if(window.removeTag(this.tag.id)){
+  this.$router.back();
+}else{
+  window.alert('删除失败')
+}
     }
  }
  goBack(){

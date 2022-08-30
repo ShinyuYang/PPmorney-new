@@ -20,7 +20,7 @@ import Tags2 from '@/components/Money/Tags2.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component, Watch} from 'vue-property-decorator';
 import {recordListModels} from '@/models/recordListModels';
-// import {tagListModel} from '@/models/tagListModel';
+
 
 const recordList = recordListModels.fetch();
 
