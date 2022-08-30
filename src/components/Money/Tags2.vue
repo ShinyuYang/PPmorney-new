@@ -1,9 +1,9 @@
 <template>
 <div class="tags">
   <ul class="current">
-    <li v-for="tag in dataSource" :key="tag"
+    <li v-for="tag in dataSource" :key="tag.id"
         :class="{selected: selectedTags.indexOf(tag)>=0}"
-        @click="select(tag)"><span>{{tag}}</span></li>
+        @click="select(tag)"><span>{{tag.name}}</span></li>
     <!-- 另一个写法  :class="selectedTags.indexOf(tag)>=0&&'selected'";
     selected是类名,后面是触发该类型的条件-->
   </ul>
@@ -62,7 +62,7 @@ export default class Tags2 extends Vue {
     justify-content: flex-start;
     flex-wrap:wrap;
     > li {
-      background:rgb(241,243,244);
+      background:rgb(245,245,246);
       height:54px;
       width:54px;
       border-radius:50% 50%;

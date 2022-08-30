@@ -2,7 +2,9 @@
 <Layout class-prefix="layout">
   <NumberPad @update:value="onUpdateAmount" @submit="saveRecord" />
   <Types :value.sync="record.type"/>
-  <Notes @update:value="onUpdateNotes"/>
+  <Notes field-name="备注"
+         placeholder="点击填写备注~"
+         @update:value="onUpdateNotes"/>
   <Tags2 :data-source.sync="tags" @update:value="onUpdateTags"/>
 <!--  前者传给子组件数据,后者是从子组件传进来-->
 <!--  onUpdateTags是本组件的一个方法,update:value是子组件的事件(传入value)-->
