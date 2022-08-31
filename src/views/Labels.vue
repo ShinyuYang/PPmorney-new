@@ -16,13 +16,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import {tagListModel} from '@/models/tagListModel';
+// import {tagListModel} from '@/models/tagListModel';
 import Button from '@/components/Button.vue';
 import store from '@/store/index2';
+import tagStore from '@/store/tagStore';
 
 
 
-tagListModel.fetch();
+tagStore.fetchTags();
 @Component({
   components: {Button}
 })
