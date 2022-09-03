@@ -1,7 +1,7 @@
 <template>
 <div class="tags">
   <ul class="current">
-    <li v-for="tag in dataSource" :key="tag.id"
+    <li v-for="tag in tagList" :key="tag.id"
         :class="{selected: selectedTags.indexOf(tag)>=0}"
         @click="select(tag)"><span>{{tag.name}}</span></li>
     <!-- 另一个写法  :class="selectedTags.indexOf(tag)>=0&&'selected'";
@@ -18,12 +18,19 @@
 
 <script lang="ts">
 import Vue from'vue';
-import {Component,Prop} from'vue-property-decorator';
+import {Component} from'vue-property-decorator';
+
 
 @Component
 export default class Tags2 extends Vue {
-  @Prop() readonly dataSource: string[] | undefined;//冒号后面是约定dataSource类型
   selectedTags: string[] = [];
+
+  get tagList(){
+    return this.$store.state.tagList;
+  }
+  created(){
+    this.$store.commit('fetchTags');
+  }
 
   select(tag: string) {
     const index = this.selectedTags.indexOf(tag)//判断selectedTags是否存在数据的语句
@@ -38,13 +45,13 @@ export default class Tags2 extends Vue {
 
   create() {
     const name = window.prompt('请输入标签名');
-    if (name === '') {
-      window.alert('标签名不能为空');
-    } else if (this.dataSource) {
-      this.$emit('update:dataSource', [...this.dataSource, name])//把新的数组重新赋值给数据tags
+    if (!name) {
+     return  window.alert('标签名不能为空');
+    }
+      this.$store.commit('createTag',name);
     }
   }
-}
+
 </script>
 
 <style lang="scss" scoped>

@@ -3,10 +3,10 @@
   <div class="navBar">
     <Icon class="leftIcon" name="left" @click="goBack" />
     <span class="title">编辑标签</span>
-    <span class="rightIcon"></span>
+    <span class="rightIcon"/>
   </div>
   <div class="form-wrapper">
-  <Notes :value="tag.name"
+  <Notes :value="currentTag.name"
          @update:value="update"
          field-name="标签名"
          placeholder="请输入标签名"/>
@@ -21,32 +21,33 @@ import Vue from'vue';
 import {Component} from'vue-property-decorator';
 import Notes from '@/components/Money/Notes.vue';
 import Button from '@/components/Button.vue';
-import store from '@/store/index2';
+
 
 @Component({
-  components: {Button, Notes}
+  components: {Button, Notes},
 })
+
 export default class EditLabel extends Vue {
-  tag?: Tag=undefined;
+  get currentTag(){
+    return this.$store.state.currentTag
+  }
   // 再通过created赋值
  created(){
-   this.tag=store.findTag(this.$route.params.id)
-   if(!this.tag){
+   const id=this.$route.params.id;
+   this.$store.commit('fetchTags');
+   this.$store.commit('setCurrentTag', id);
+   if(!this.currentTag){
      this.$router.replace('/404');
    }//实现点击一个标签出现对应标签的编辑页面,跟route页面关联
  }
  update(name: string){
-   if(this.tag){
-     store.updateTag(this.tag.id,name);
+   if(this.currentTag){
+    this.$store.commit('updateTag',{id: this.currentTag.id,name})
    }
  }
  remove(){
-    if(this.tag){
-if(store.removeTag(this.tag.id)){
-  this.$router.back();
-}else{
-  window.alert('删除失败')
-}
+    if(this.currentTag){
+      this.$store.commit('removeTag',this.currentTag.id);
     }
  }
  goBack(){
@@ -66,7 +67,6 @@ if(store.removeTag(this.tag.id)){
   align-items: center;
   justify-content: space-between;
   > .title{
-
   }
   > .leftIcon{
 

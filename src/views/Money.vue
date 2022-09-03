@@ -5,7 +5,7 @@
   <Notes field-name="备注"
          placeholder="点击填写备注~"
          @update:value="onUpdateNotes"/>
-  <Tags2 :data-source.sync="tags" @update:value="onUpdateTags"/>
+  <Tags2/>
 <!--  前者传给子组件数据,后者是从子组件传进来-->
 <!--  onUpdateTags是本组件的一个方法,update:value是子组件的事件(传入value)-->
 </Layout>
@@ -19,24 +19,27 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags2 from '@/components/Money/Tags2.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component} from 'vue-property-decorator';
-import store from '@/store/index2';
+
 
 
 @Component({
   components: {Tags2,Notes,Types,NumberPad},
 })
 export default class Money extends Vue  {
-     tags=store.tagList;
-     recordList=store.recordList;
+  get recordList(){
+    return this.$store.state.recordList;
+  }
       record: RecordItem={
         tags: [],
         notes: '',
         type: '-',
         amount: 0,
       };
-     onUpdateTags(value: string[]) {
-        this.record.tags=value;
-     }
+
+      created(){
+        this.$store.commit('fetchRecords')
+      }
+
      onUpdateNotes(value: string){
         this.record.notes=value;
      }
@@ -44,7 +47,7 @@ export default class Money extends Vue  {
     this.record.amount= parseFloat(value);
   }
   saveRecord(){
-    store.createRecord(this.record);
+    this.$store.commit('createRecord',this.record);
   }
 }
 </script>
