@@ -1,7 +1,8 @@
 <template>
 <Layout class-prefix="layout">
   <NumberPad @update:value="onUpdateAmount" @submit="saveRecord" />
-  <Types :value.sync="record.type"/>
+  <Types :data-source="recordTypeList"
+         :value.sync="record.type"/>
   <Notes field-name="备注"
          placeholder="点击填写备注~"
          @update:value="onUpdateNotes"/>
@@ -19,11 +20,12 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags2 from '@/components/Money/Tags2.vue';
 import Types from '@/components/Money/Types.vue';
 import {Component} from 'vue-property-decorator';
+import recordTypeList from '@/constants/recordTypeList';
 
 
 
 @Component({
-  components: {Tags2,Notes,Types,NumberPad},
+  components: {Tags2,Notes,Types,NumberPad,recordTypeList},
 })
 export default class Money extends Vue  {
   get recordList(){
