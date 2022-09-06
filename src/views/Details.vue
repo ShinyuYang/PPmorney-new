@@ -24,7 +24,6 @@
 
 
 <script lang="ts">
-import Types from '@/components/Money/Types.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Money/Tabs.vue';
@@ -34,12 +33,12 @@ import recordTypeList from '@/constants/recordTypeList';
 
 
 @Component({
-  components:{Types,Tabs},
+  components:{Tabs},
 })
 export default class Details extends Vue{
-type = '-'
+  type = '-'
   interval='day'
-array=intervalList;
-array2=recordTypeList
+  array=intervalList;
+  array2=recordTypeList
 }
 </script>
