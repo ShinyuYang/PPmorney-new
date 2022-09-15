@@ -5,8 +5,9 @@
         :value.sync="record.type"/>
   <Notes field-name="备注"
          placeholder="点击填写备注~"
+         :value="record.notes"
          @update:value="onUpdateNotes"/>
-  <Tags2/>
+  <Tags2 @update:value="record.tags=$event"/>
 <!--  前者传给子组件数据,后者是从子组件传进来-->
 <!--  onUpdateTags是本组件的一个方法,update:value是子组件的事件(传入value)-->
 </Layout>
@@ -53,7 +54,14 @@ recordTypeList = recordTypeList;
     this.record.amount= parseFloat(value);
   }
   saveRecord(){
+    if(!this.record.tags||this.record.tags.length===0){
+      return window.alert('请至少选择一个标签');
+        }
     this.$store.commit('createRecord',this.record);
+    if (this.$store.state.createRecordError === null) {
+      window.alert('已保存');
+      this.record.notes='';
+    }
   }
 }
 </script>

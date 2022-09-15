@@ -86,7 +86,7 @@ export default class Tags2 extends Vue {
   .new{
     position: absolute;
     left:84%;
-    top:32%;
+    top:34%;
   > .add{
     height: 40px;
     width: 40px;

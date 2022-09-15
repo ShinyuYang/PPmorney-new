@@ -2,7 +2,7 @@
   <Layout>
     <Tabs class-prefix="type" :data-source="array2" :value.sync="type"/>
 <!--    <Tabs class-prefix="interval" :data-source="array" :value.sync="interval"/>-->
-      <ol>
+      <ol v-if="groupedList.length>0">
         <li v-for="(group,index) in groupedList" :key="index">
           <h3 class="title">{{beautify(group.title)}}<span>¥{{group.total}}</span></h3>
           <ol>
@@ -15,10 +15,17 @@
           </ol>
         </li>
       </ol>
+    <div v-else class="noResult">
+      暂无记录
+    </div>
   </Layout>
 </template>
 
 <style scoped lang="scss">
+.noResult{
+  padding:16px;
+  text-align: center;
+}
 ::v-deep .type-tabs-item{
   background: #c4c4c4;
   box-shadow: 0 0 3px rgba(0,0,0,0.1);
@@ -77,16 +84,14 @@ import dayjs from 'dayjs';
 import clone from '@/lib/clone';
 
 const api=dayjs();
-console.log(api);
-
-
 
 @Component({
   components:{Tabs},
 })
 export default class Details extends Vue{
-  tagString(tags: string[]){
-    return tags.length===0?'无' : tags.join(',');
+  tagString(tags: Tag[]){
+    return tags.length===0?'无' :
+    tags.map(t => t. name).join(',');
   }
   beautify(string: string){
     const day=dayjs(string);
@@ -112,11 +117,12 @@ export default class Details extends Vue{
   }
   get groupedList(){
     const {recordList}=this;
-    if(recordList.length===0){return[];}
+
     // type HashTableValue={title: string;items: RecordItem[] }
 
     // const hashTable: {title: string;items: RecordItem[]}[];
     const newList=clone(recordList).filter(r=>r.type === this.type).sort((a,b)=>dayjs(b.createdAt).valueOf()-dayjs(a.createdAt).valueOf())
+    if(newList.length===0){return[];}
    type Result={title: string;total?: number;items: RecordItem[]}[]
     const result: Result=[{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'),items: [newList[0]]}]
    for(let i=1;i< newList.length;i++){

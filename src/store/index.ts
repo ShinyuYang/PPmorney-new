@@ -6,13 +6,20 @@ import router from '@/router';
 
 Vue.use(Vuex)
 
+type RootState = {
+  recordList: RecordItem[];
+  createRecordError: Error|null;
+  tagList: Tag[];
+  currentTag?: Tag;
+}
 
 
 const store = new Vuex.Store({
   state: {
     recordList: [] ,
+    createRecordError:null,
     tagList: [] ,
-    currentTag: undefined
+    currentTag: undefined,
   } as RootState,
   mutations: {
     setCurrentTag(state,id: string){
@@ -36,17 +43,24 @@ const store = new Vuex.Store({
      state.recordList=JSON.parse(window.localStorage.getItem('recordList') ||'[]') as RecordItem[];
 
     },
-    createRecord(state,record){
+    createRecord(state,record: RecordItem){
       const record2: RecordItem =clone(record);//深拷贝方法
       record2.createdAt=new Date().toISOString();
       state.recordList.push(record2);
       store.commit('saveRecords')
+
     },
-    saveRecords(state){
+    saveRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList))
     },
     fetchTags(state) {
       state.tagList=JSON.parse(window.localStorage.getItem('tagList') ||'[]')
+      if(!state.tagList|| state.tagList.length===0){
+        store.commit('createTag','午饭');
+        store.commit('createTag','房租');
+        store.commit('createTag','工资');
+        store.commit('createTag','副业');
+      }
     },
     createTag(state,name: string){
       const names= state.tagList.map(item =>item.name);
