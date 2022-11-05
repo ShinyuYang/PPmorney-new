@@ -68,6 +68,7 @@ export default class Tags2 extends Vue {
   height: 45vh;
   flex-grow:1;
   overflow: auto;
+  position: relative;
   > .current{
     display: flex;
     flex-direction: row;
@@ -79,7 +80,7 @@ export default class Tags2 extends Vue {
       height:54px;
       width:54px;
       border-radius:50% 50%;
-      position: relative;
+
       display: flex;
       justify-content: center;
       align-items: center;
@@ -91,8 +92,8 @@ export default class Tags2 extends Vue {
   }
   .new{
     position: absolute;
-    left:84%;
-    top:34%;
+    right:5%;
+    top:70%;
   > .add{
     height: 40px;
     width: 40px;
